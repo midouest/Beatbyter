@@ -30,12 +30,21 @@ set(PLAYDATE_GAME_DEVICE Beatbyter_DEVICE)
 
 project(${PLAYDATE_GAME_NAME} C ASM)
 
-SET(C_SOURCES library/main.c)
+set(LIBRARY_SOURCES
+    library/main.c
+    library/vm.h
+    library/vm.c
+    library/op.h
+    library/op.c
+    library/bytebeat.h
+    library/bytebeat.c
+    library/glue.h
+    library/glue.c)
 
 if (TOOLCHAIN STREQUAL "armgcc")
-    add_executable(${PLAYDATE_GAME_DEVICE} ${SDK}/C_API/buildsupport/setup.c ${C_SOURCES})
+    add_executable(${PLAYDATE_GAME_DEVICE} ${SDK}/C_API/buildsupport/setup.c ${LIBRARY_SOURCES})
 else()
-    add_library(${PLAYDATE_GAME_NAME} SHARED ${C_SOURCES})
+    add_library(${PLAYDATE_GAME_NAME} SHARED ${LIBRARY_SOURCES})
 endif()
 
 include(${SDK}/C_API/buildsupport/playdate_game.cmake)
